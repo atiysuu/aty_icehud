@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Chivo Mono', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    overflow: hidden;
+}
+
+main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    position: relative;
+
+    .status{
+        position: absolute;
+        width: 350px;
+        height: 230px;
+        left: 25px;
+        bottom: 25px;
+        color: #fff;
+
+        .map-outline{
+            width: 270px;
+            height: 190px;
+            border: 1px solid #ffffff3c;
+            box-shadow: 0 0 5px 1px #ffffff3c, 0 0 5px 1px #ffffff3c inset;
+            position: absolute;
+            left: 5px;
+            bottom: 10px;
+        }
+
+        .status-wrapper {
+            width: 40px;
+            height: 190px;
+            position: absolute;
+            bottom: 10px;
+            left: 0px;
+            transition: left 0.4s, top 0.4s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+            justify-content: end;
+
+            .health-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .health{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 20px;
+                    }
+                }
+            }
+            
+            .armour-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .armour{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 18px;
+                    }
+                }
+            }
+
+            .stamina-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .stamina{
+                    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 18px;
+                    }
+                }
+            }
+
+            .oxygen-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .oxygen{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 18px;
+                    }
+                }
+            }
+        }
+
+        .location{
+            top: 190px;
+            left: 50px;
+            transition: left 0.4s, top 0.4s;
+            position: absolute;
+            display: flex;
+            gap: 5px;
+        }
+
+        span{
+            font-family: 'Poppins', sans-serif;
+        }
+
+        img{
+            width: 25px;
+        }
+    }
+
+    .carhud{
+        display: none;
+        position: absolute;
+        right: 35px;
+        bottom: 35px;
+        width: 310px;
+        color: #fff;
+        transition: right 0.5s;
+
+        .other-wrapper{
+            margin-left: 8px;
+
+            .speed-unit{
+                font-family: 'Poppins', sans-serif;
+                font-size: 52px;
+                opacity: 0.4;
+                font-weight: 700;
+                height: 55px;
+                width: 120px;
+            }
+
+            .icons{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 120px;
+                margin-top: 10px;
+
+                img{
+                    width: 22px;
+                    opacity: 0.8;
+
+                    transition: opacity 0.3s;
+                }
+
+                .fuel-bar-wrapper{
+                    height: 20px;
+                    display: flex;
+                    align-items: end;
+                    gap: 2px;
+                    position: relative;
+    
+                    .fuel-bar{
+                        width: 5px;
+                        height: 50%;
+                        background-color: #fff;
+                        border-radius: 1px;
+                        transition: height 0.2s;
+                        opacity: 0.8;
+                    }
+    
+                    img{
+                        width: 18px;
+                    }
+                }
+            }
+        }
+
+        .speed{
+            font-size: 100px;
+            font-weight: 600;
+            width: 180px;
+            height: 105px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .rpm{
+            width: 180px;
+            height: 5px;
+            border-right: 2px solid #fff;
+            position: relative;
+
+            .rpm-bar{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 0%;
+                height: 5px;
+                background-color: #fff;
+                transition: width 0.2s;
+            }
+        }
+    }
+}

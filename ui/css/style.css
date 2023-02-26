@@ -1,0 +1,219 @@
+@import url("https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Chivo Mono", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+main .status {
+  position: absolute;
+  width: 350px;
+  height: 230px;
+  left: 25px;
+  bottom: 25px;
+  color: #fff;
+}
+main .status .map-outline {
+  width: 270px;
+  height: 190px;
+  border: 1px solid rgba(255, 255, 255, 0.2352941176);
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.2352941176), 0 0 5px 1px rgba(255, 255, 255, 0.2352941176) inset;
+  position: absolute;
+  left: 5px;
+  bottom: 10px;
+}
+main .status .status-wrapper {
+  width: 40px;
+  height: 190px;
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  transition: left 0.4s, top 0.4s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: end;
+}
+main .status .status-wrapper .health-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .health-wrapper .health {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .health-wrapper .health img {
+  width: 20px;
+}
+main .status .status-wrapper .armour-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .armour-wrapper .armour {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .armour-wrapper .armour img {
+  width: 18px;
+}
+main .status .status-wrapper .stamina-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .stamina-wrapper .stamina {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .stamina-wrapper .stamina img {
+  width: 18px;
+}
+main .status .status-wrapper .oxygen-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .oxygen-wrapper .oxygen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .oxygen-wrapper .oxygen img {
+  width: 18px;
+}
+main .status .location {
+  top: 190px;
+  left: 50px;
+  transition: left 0.4s, top 0.4s;
+  position: absolute;
+  display: flex;
+  gap: 5px;
+}
+main .status span {
+  font-family: "Poppins", sans-serif;
+}
+main .status img {
+  width: 25px;
+}
+main .carhud {
+  display: none;
+  position: absolute;
+  right: 35px;
+  bottom: 35px;
+  width: 310px;
+  color: #fff;
+  transition: right 0.5s;
+}
+main .carhud .other-wrapper {
+  margin-left: 8px;
+}
+main .carhud .other-wrapper .speed-unit {
+  font-family: "Poppins", sans-serif;
+  font-size: 52px;
+  opacity: 0.4;
+  font-weight: 700;
+  height: 55px;
+  width: 120px;
+}
+main .carhud .other-wrapper .icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 120px;
+  margin-top: 10px;
+}
+main .carhud .other-wrapper .icons img {
+  width: 22px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+main .carhud .other-wrapper .icons .fuel-bar-wrapper {
+  height: 20px;
+  display: flex;
+  align-items: end;
+  gap: 2px;
+  position: relative;
+}
+main .carhud .other-wrapper .icons .fuel-bar-wrapper .fuel-bar {
+  width: 5px;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 1px;
+  transition: height 0.2s;
+  opacity: 0.8;
+}
+main .carhud .other-wrapper .icons .fuel-bar-wrapper img {
+  width: 18px;
+}
+main .carhud .speed {
+  font-size: 100px;
+  font-weight: 600;
+  width: 180px;
+  height: 105px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+main .carhud .rpm {
+  width: 180px;
+  height: 5px;
+  border-right: 2px solid #fff;
+  position: relative;
+}
+main .carhud .rpm .rpm-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: 5px;
+  background-color: #fff;
+  transition: width 0.2s;
+}
+
+/*# sourceMappingURL=style.css.map */
