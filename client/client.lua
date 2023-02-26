@@ -1,3 +1,9 @@
+if Config.Framework == "esx" then
+    ESX = exports['es_extended']:getSharedObject()
+elseif Config.Framework == "qb" then
+    QBCore = exports['qb-core']:GetCoreObject()
+end
+
 CreateThread(function()
     while true do
         Player = PlayerPedId()
@@ -16,6 +22,7 @@ if Config.UseCarHud then
         local speedBuffer, velBuffer  = {0.0,0.0}, {}
 
         while true do
+            WaitPlayer()
             if IsPedInAnyVehicle(Player, false) then
                 DisplayRadar(true)
                 sleep = 1
@@ -116,6 +123,7 @@ end
 
 CreateThread(function()
     while true do
+        WaitPlayer()
         local StreetHash = GetStreetNameAtCoord(PlayerPosition.x, PlayerPosition.y, PlayerPosition.z)
         local Street = GetStreetNameFromHashKey(StreetHash)
 
@@ -129,8 +137,9 @@ CreateThread(function()
 end) 
 
 CreateThread(function()
+    local hunger, thirst
     while true do
-
+        WaitPlayer()
         local health = GetEntityHealth(Player)
         local val = health - 100
         local armour = GetPedArmour(Player)
@@ -142,12 +151,45 @@ CreateThread(function()
             val = (health + 25 ) - 100
         end
 
+        if Config.Framework == "esx" then
+            TriggerEvent('esx_status:getStatus', 'hunger', function(hunger)
+                hunger = math.floor(hunger.getPercent())
+                SendNUIMessage({
+                    action = "HungerUpdate",
+                    hunger = hunger,
+                })
+            end)
+            TriggerEvent('esx_status:getStatus', 'thirst', function(thirst)
+                thirst = math.floor(thirst.getPercent())
+                SendNUIMessage({
+                    action = "ThirstUpdate",
+                    thirst = thirst,
+                })
+            end)
+        elseif Config.Framework == "qb" then
+            hunger = QBCore.Functions.GetPlayerData().metadata["hunger"]
+            thirst = QBCore.Functions.GetPlayerData().metadata["thirst"]
+            SendNUIMessage({
+                action = "HungerUpdate",
+                hunger = hunger,
+            })
+            SendNUIMessage({
+                action = "ThirstUpdate",
+                thirst = thirst,
+            })
+        end
+        
+        SendNUIMessage({
+            action = "LoggedIn",
+        })
+
         SendNUIMessage({
             action = "StatusUpdate",
             health = val,
             armour = armour,
             stamina = stamina,
             oxygen = oxygen,
+            framework = Config.Framework,
             inWater = InWater,
         })
         
@@ -166,3 +208,27 @@ function IsCar(veh)
     local vc = GetVehicleClass(veh)
     return (vc >= 0 and vc <= 7) or (vc >= 9 and vc <= 12) or (vc >= 17 and vc <= 20)
 end 
+
+function WaitPlayer()
+    if Config.Framework == "esx" then
+        while ESX == nil do
+            Citizen.Wait(0)
+        end
+        while ESX.GetPlayerData()  == nil do
+            Citizen.Wait(0)
+        end
+        while ESX.GetPlayerData().job == nil do
+            Citizen.Wait(0)
+        end       
+    else
+        while QBCore == nil do
+            Citizen.Wait(0)
+        end
+        while QBCore.Functions.GetPlayerData() == nil do
+            Citizen.Wait(0)
+        end
+        while QBCore.Functions.GetPlayerData().metadata == nil do
+            Citizen.Wait(0)
+        end
+    end
+end

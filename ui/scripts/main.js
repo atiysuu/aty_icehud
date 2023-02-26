@@ -79,11 +79,20 @@ $(function () {
             let Street = event.data.street;
             $(".location span").text(Street);
         }
+        if(event.data.action == "HungerUpdate"){
+            let Hunger = event.data.hunger;
+            $(".hunger").css("background-image", `conic-gradient(#fff `+Hunger+`%, transparent `+(Hunger - 100)+`%, transparent)`);
+        }
+        if(event.data.action == "ThirstUpdate"){
+            let Thirst = event.data.thirst;
+            $(".thirst").css("background-image", `conic-gradient(#fff `+Thirst+`%, transparent `+(Thirst - 100)+`%, transparent)`);
+        }
         if(event.data.action == "StatusUpdate"){
             let Health = event.data.health;
             let Armour = event.data.armour;
             let Stamina = event.data.stamina;
             let Oxygen = event.data.oxygen;
+            let Framework = event.data.framework;
             let InWater = event.data.inWater;
 
             if (Armour == 0){
@@ -98,6 +107,14 @@ $(function () {
             }
             else if (!InWater){
                 $(".oxygen-wrapper").fadeOut()
+            }
+
+            if (Framework == "standalone"){
+                $(".hunger-wrapper").hide()
+                $(".thirst-wrapper").hide()
+            }else{
+                $(".hunger-wrapper").show()
+                $(".thirst-wrapper").show()
             }
 
             $(".health").css("background-image", `conic-gradient(#fff `+Health+`%, transparent `+(Health - 100)+`%, transparent)`);
@@ -117,6 +134,9 @@ $(function () {
                 top: "190px",
                 left: "50px",
             });
+        }
+        if(event.data.action == "LoggedIn"){
+            $("body").fadeIn()
         }
     })
 })

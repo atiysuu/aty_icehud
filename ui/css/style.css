@@ -9,6 +9,7 @@
 
 body {
   overflow: hidden;
+  display: none;
 }
 
 main {
@@ -86,6 +87,46 @@ main .status .status-wrapper .armour-wrapper .armour {
 }
 main .status .status-wrapper .armour-wrapper .armour img {
   width: 18px;
+}
+main .status .status-wrapper .hunger-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .hunger-wrapper .hunger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .hunger-wrapper .hunger img {
+  width: 16px;
+}
+main .status .status-wrapper .thirst-wrapper {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #fff;
+  padding: 2px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.4705882353), 0 0 5px 1px rgba(255, 255, 255, 0.4705882353) inset;
+}
+main .status .status-wrapper .thirst-wrapper .thirst {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+  border-radius: 50%;
+}
+main .status .status-wrapper .thirst-wrapper .thirst img {
+  width: 16px;
 }
 main .status .status-wrapper .stamina-wrapper {
   width: 40px;

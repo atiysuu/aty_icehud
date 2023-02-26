@@ -10,6 +10,7 @@
 
 body{
     overflow: hidden;
+    display: none;
 }
 
 main{
@@ -91,6 +92,52 @@ main{
 
                     img{
                         width: 18px;
+                    }
+                }
+            }
+            
+            .hunger-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .hunger{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 16px;
+                    }
+                }
+            }
+
+            .thirst-wrapper{
+                width: 40px;
+                height: 40px;
+                border: 3px solid #fff;
+                padding: 2px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px 1px #ffffff78, 0 0 5px 1px #ffffff78 inset ;
+
+                .thirst{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    background-image: conic-gradient(#fff 64%, transparent 17%, transparent);
+                    border-radius: 50%;
+
+                    img{
+                        width: 16px;
                     }
                 }
             }
