@@ -22,6 +22,9 @@ if Config.UseCarHud then
         local speedBuffer, velBuffer  = {0.0,0.0}, {}
 
         while true do
+            if Config.Framework == "esx" or Config.Framework == "qb" then
+                WaitPlayer()
+            end
             if IsPedInAnyVehicle(Player, false) then
                 DisplayRadar(true)
                 sleep = 1
@@ -122,6 +125,9 @@ end
 
 CreateThread(function()
     while true do
+        if Config.Framework == "esx" or Config.Framework == "qb" then
+            WaitPlayer()
+        end
         local StreetHash = GetStreetNameAtCoord(PlayerPosition.x, PlayerPosition.y, PlayerPosition.z)
         local Street = GetStreetNameFromHashKey(StreetHash)
 
@@ -137,6 +143,9 @@ end)
 CreateThread(function()
     local hunger, thirst
     while true do
+        if Config.Framework == "esx" or Config.Framework == "qb" then
+            WaitPlayer()
+        end
         local health = GetEntityHealth(Player)
         local val = health - 100
         local armour = GetPedArmour(Player)
@@ -205,3 +214,27 @@ function IsCar(veh)
     local vc = GetVehicleClass(veh)
     return (vc >= 0 and vc <= 7) or (vc >= 9 and vc <= 12) or (vc >= 17 and vc <= 20)
 end 
+
+function WaitPlayer()
+    if Config.Framework == "esx" then
+        while ESX == nil do
+            Citizen.Wait(0)
+        end
+        while ESX.GetPlayerData()  == nil do
+            Citizen.Wait(0)
+        end
+        while ESX.GetPlayerData().job == nil do
+            Citizen.Wait(0)
+        end       
+    else
+        while QBCore == nil do
+            Citizen.Wait(0)
+        end
+        while QBCore.Functions.GetPlayerData() == nil do
+            Citizen.Wait(0)
+        end
+        while QBCore.Functions.GetPlayerData().metadata == nil do
+            Citizen.Wait(0)
+        end
+    end
+end
