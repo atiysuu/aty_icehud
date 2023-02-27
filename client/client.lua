@@ -33,7 +33,7 @@ if Config.UseCarHud then
         while true do
             if IsPedInAnyVehicle(Player, false) then
                 DisplayRadar(true)
-                sleep = 1
+                sleep = Config.RefreshRate
                 local Vehicle = GetVehiclePedIsIn(Player, false)
                 local Speed = math.floor(GetEntitySpeed(Vehicle)*SpeedMultiplier)
                 local Rpm = math.floor(GetVehicleCurrentRpm(Vehicle) * 100)
