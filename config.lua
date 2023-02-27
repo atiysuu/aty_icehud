@@ -5,4 +5,5 @@ Config = {
     SeatBeltKey = 29, -- B / https://docs.fivem.net/docs/game-references/controls/
     UseCarHud = true,
     UseStatusHud = true,
+    RefreshRate = 500,
 }
