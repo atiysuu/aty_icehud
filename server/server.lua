@@ -1,4 +1,4 @@
-local login = false
+local login = false -- PREVENTS HUD FROM VIEWING WITHOUT SELECTING THE PLAYER CHARACTER -- 
 
 if Config.Framework == "esx" then
     ESX = exports['es_extended']:getSharedObject()
@@ -7,6 +7,7 @@ elseif Config.Framework == "qb" then
 end
 
 if Config.UseCarHud then
+    -- EJECTS EACH PLAYER FROM THE CAR --
     RegisterServerEvent('aty_icehud:server:EjectPlayer')
     AddEventHandler('aty_icehud:server:EjectPlayer', function(table, velocity)
     for i=1, #table do
@@ -18,6 +19,7 @@ if Config.UseCarHud then
 end
 
 if Config.UsePlayerStats then
+    -- GETS PLAYER PING --
     RegisterServerEvent("aty_icehud:server:GetPlayerPing", function()
         local src = source
         local PlayerPing = GetPlayerPing(src)
@@ -26,6 +28,7 @@ if Config.UsePlayerStats then
 
 
     if Config.Framework == "esx" then
+        -- GETS PLAYER MONEY FOR ESX --
         RegisterServerEvent("aty_icehud:server:GetPlayerMoney", function()
             local src = source
             local xPlayer = ESX.GetPlayerFromId(src)
@@ -36,6 +39,7 @@ if Config.UsePlayerStats then
             TriggerClientEvent("aty_icehud:client:GetPlayerMoney", src, PlayerCash, PlayerBank)
         end)
     elseif Config.Framework == "qb" then
+        -- GETS PLAYER MONEY FOR QBCORE --
         RegisterServerEvent("aty_icehud:server:GetPlayerMoney", function()
             local src = source
             local xPlayer = QBCore.Functions.GetPlayer(src)

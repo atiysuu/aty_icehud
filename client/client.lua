@@ -1,6 +1,7 @@
-local login = false 
-SpeedMultiplier = Config.SpeedUnit == "kmh" and 3.6 or 2.23694
-DisplayRadar(true)
+local login = false -- PREVENTS HUD FROM VIEWING WITHOUT SELECTING THE PLAYER CHARACTER -- 
+SpeedMultiplier = Config.SpeedUnit == "kmh" and 3.6 or 2.23694 -- SPEED MULTIPLIER (MPH - KMN / Don't Touch) --
+DisplayRadar(false) -- CLOSES THE MAP --
+
 if Config.Framework == "esx" then
     ESX = exports['es_extended']:getSharedObject()
 
@@ -25,10 +26,12 @@ CreateThread(function()
     end
 end)
 
-if Config.UseCarHud then
+------- CAR HUD -------
+if Config.UseCarHud then 
     SeatBelt = false
     Cruise = false
     CreateThread(function()
+
         local speedBuffer, velBuffer  = {0.0,0.0}, {}
         local sleep = 2000
 
@@ -40,6 +43,7 @@ if Config.UseCarHud then
                 local Vehicle = GetVehiclePedIsIn(Player, false)
                 local Speed = math.floor(GetEntitySpeed(Vehicle)*SpeedMultiplier)
                 
+                -- CRUISE CONTROL --
                 if IsControlJustPressed(0, Config.CruiseKey) and not Cruise and GetPedInVehicleSeat(Vehicle, -1) == PlayerPedId() then
                     SetVehicleMaxSpeed(Vehicle, (Speed / SpeedMultiplier) + 0.0)
                     Cruise = true
@@ -47,7 +51,8 @@ if Config.UseCarHud then
                     SetVehicleMaxSpeed(Vehicle, 0.0)
                     Cruise = false
                 end
-                
+
+                -- SEATBELT --
                 if IsControlJustPressed(0, Config.SeatBeltKey) and not SeatBelt then
                     SeatBelt = true
                 elseif IsControlJustPressed(0, Config.SeatBeltKey) and SeatBelt then
@@ -55,7 +60,7 @@ if Config.UseCarHud then
                 end
         
                 if SeatBelt then
-                    DisableControlAction(0, 75)
+                    DisableControlAction(0, 75) -- PREVENTS PLAYER FROM GETTING OUT OF THE CAR --
                 elseif not SeatBelt then
                     speedBuffer[2] = speedBuffer[1]
                     speedBuffer[1] = GetEntitySpeed(Vehicle) 
@@ -63,6 +68,7 @@ if Config.UseCarHud then
                     velBuffer[2] = velBuffer[1]
                     velBuffer[1] = GetEntityVelocity(Vehicle)
         
+                    -- GETS THE CARS SPEED --
                     if speedBuffer[2] and GetEntitySpeedVector(Vehicle, true).y > 1.0  and speedBuffer[1] > 15 and (speedBuffer[2] - speedBuffer[1]) > (speedBuffer[1] * 0.255) then			   
                     
                         if not SeatBelt then
@@ -75,6 +81,7 @@ if Config.UseCarHud then
                             SeatBelt = false
                         end
         
+                        -- GETS EACH SEAT FROM CAR --
                         local seatPlayerId = {}
                         for i=1, GetVehicleModelNumberOfSeats(GetEntityModel(Vehicle)) do
                             if i ~= 1 then
@@ -87,6 +94,7 @@ if Config.UseCarHud then
                             end
                         end
         
+                        -- EJECTS EACH PLAYER FROM THE CAR --
                         if #seatPlayerId > 0 then TriggerServerEvent("aty_icehud:server:EjectPlayer", seatPlayerId, velBuffer[2]) end
                     end
                 end
@@ -138,6 +146,7 @@ if Config.UseCarHud then
         end
     end)
 
+    ------- SEATBELT (DON'T TOUCH) -------
     RegisterNetEvent('aty_icehud:client:EjectPlayer')
     AddEventHandler('aty_icehud:client:EjectPlayer', function(velocity)
         if not SeatBelt then
@@ -152,6 +161,7 @@ if Config.UseCarHud then
     end)
 end
 
+------- STREET LOCATION -------
 CreateThread(function()
     while true do
         local StreetHash = GetStreetNameAtCoord(PlayerPosition.x, PlayerPosition.y, PlayerPosition.z)
@@ -166,14 +176,18 @@ CreateThread(function()
     end
 end) 
 
+------- STATUS HUD -------
 if Config.UseStatusHud then
     CreateThread(function()
         local hunger, thirst
         while true do
             if login then
+
+                ------- MAKES HUD VISIBLE -------
                 SendNUIMessage({
                     action = "LoggedIn",
                 })
+                
                 local health = GetEntityHealth(Player)
                 local val = health - 100
                 local armour = GetPedArmour(Player)
@@ -181,6 +195,7 @@ if Config.UseStatusHud then
                 local oxygen = math.floor(GetPlayerUnderwaterTimeRemaining(PlayerId())) * 10
                 local InWater = IsPedSwimmingUnderWater(Player)
             
+                ------- REDUCES THE HEALTH FOR DEFAULT MALE PED -------
                 if GetEntityModel(Player) == `mp_f_freemode_01` then
                     val = (health + 25 ) - 100
                 end
@@ -229,6 +244,7 @@ if Config.UseStatusHud then
     end) 
 end
 
+------- STATS (TOP RIGHT) -------
 if Config.UsePlayerStats then
     local PlayersPing = 0
     local PlayersCash = 0
@@ -245,9 +261,9 @@ if Config.UsePlayerStats then
 
     CreateThread(function()
         while true do
-            local PlayerIDX = GetPlayerServerId(PlayerId())
-            TriggerServerEvent("aty_icehud:server:GetPlayerPing")
-            TriggerServerEvent("aty_icehud:server:GetPlayerMoney")
+            local PlayerIDX = GetPlayerServerId(PlayerId()) -- PLAYERS SERVER ID --
+            TriggerServerEvent("aty_icehud:server:GetPlayerPing") -- PLAYERS PING --
+            TriggerServerEvent("aty_icehud:server:GetPlayerMoney") -- PLAYERS MONEY --
 
             SendNUIMessage({
                 action = "StatsUpdate",
@@ -261,6 +277,7 @@ if Config.UsePlayerStats then
     end)
 end
 
+------- FUNCTIONS -------
 function ForwardValue(entity)  
     local hr = GetEntityHeading(entity) + 90.0
     if hr < 0.0 then hr = 360.0 + hr end
