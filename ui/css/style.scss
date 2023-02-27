@@ -19,6 +19,70 @@ main{
     display: flex;
     position: relative;
 
+    .stats{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-top: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 10px;
+
+        .logo{
+            height: 50px;
+            padding-right: 25px;
+            img {
+                height: 50px;
+            }
+        }
+
+        .other{
+            padding-left: 10px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.4) 100%);
+            height: 50px;
+            width: 200px;
+            color: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: center;
+            gap: 5px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+
+            .top, .bottom{
+                width: 100%;
+                display: flex;
+
+                .id, .ping, .cash, .bank{
+                    width: 50%;
+                }
+            }
+
+            &::before{
+                content: '';
+                height: 1px;
+                width: 200px;
+                position: absolute;
+                background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.4) 100%);
+                top: 0;
+                right: 0;
+            }
+
+            &::after{
+                content: '';
+                height: 1px;
+                width: 200px;
+                position: absolute;
+                background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.4) 100%);
+                bottom: 0;
+                right: 0;
+            }
+        }
+    }
+
     .status{
         position: absolute;
         width: 350px;

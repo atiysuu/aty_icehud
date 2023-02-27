@@ -2,20 +2,9 @@ $(function () {
     let buckleSound = false;
     window.addEventListener('message', function (event) {
         if(event.data.action == "VehicleInfo"){
-            let VehicleSpeed = event.data.vehicleSpeed;
-            let VehicleRPM = event.data.rpm;
-            let Cruise = event.data.cruise;
-            let SeatBelt = event.data.seatBelt;
-            let SpeedUnit = event.data.speedUnit;
-            let VehicleHealth = event.data.vehicleHealth;
-            let Fuel = event.data.fuel;
-
             $(".carhud").fadeIn()
             $(".carhud").css("display", "flex");
             $(".carhud").css("right", "35px");
-            $(".speed").text(String(VehicleSpeed).padStart(3, '0'));
-            $(".rpm-bar").css("width", VehicleRPM+"%");
-            $(".fuel-bar").css("height", Fuel+"%"); 
             $(".map-outline").fadeIn();
             $(".status-wrapper").css("left", "290px");
             $(".stamina-wrapper").fadeOut()
@@ -23,11 +12,33 @@ $(function () {
                 top: "0",
                 left: "0",
             });
+            let VehicleSpeed = event.data.vehicleSpeed;
+            let VehicleHealth = event.data.vehicleHealth
+            let SpeedUnit = event.data.speedUnit;
+            let VehicleRPM = event.data.rpm;
+            let Fuel = event.data.fuel;
+            let Cruise = event.data.cruise;
+            let SeatBelt = event.data.seatBelt;
 
             if (SpeedUnit == "kmh"){
                 $(".speed-unit").text("KMH");
             }else{
                 $(".speed-unit").text("MPH");
+            }
+
+            $(".speed").text(String(VehicleSpeed).padStart(3, '0'));
+            $(".rpm-bar").css("width", VehicleRPM+"%");
+            $(".fuel-bar").css("height", Fuel+"%");
+
+            if (Fuel <= 40 && Fuel >= 20){
+                $(".fuel").attr("src", "img/fuel40.png");
+                $(".fuel-bar").css("background-color", "#FFA229");
+            }else if(Fuel <= 20){
+                $(".fuel").attr("src", "img/fuel20.png");
+                $(".fuel-bar").css("background-color", "#FF2929");
+            }else{
+                $(".fuel").attr("src", "img/fuel.png");
+                $(".fuel-bar").css("background-color", "#FFFFFF");
             }
 
             if (VehicleHealth <= 700 && VehicleHealth >= 500){
@@ -39,20 +50,6 @@ $(function () {
             }else{
                 $(".engine").attr("src", "img/engine.png");
                 $(".engine").css("opacity", "0.3");
-            }
-
-            let FuelBGColor = null; 
-            let color = "#FFFFFF";
-
-            if (Fuel <= 40 && Fuel >= 20){
-                $(".fuel").attr("src", "img/fuel40.png");
-                $(".fuel-bar").css("background-color", "#FFA229");
-            }else if(Fuel <= 20){
-                $(".fuel").attr("src", "img/fuel20.png");
-                $(".fuel-bar").css("background-color", "#FF2929");
-            }else{
-                $(".fuel").attr("src", "img/fuel.png");
-                $(".fuel-bar").css("background-color", "#FFFFFF");
             }
 
             if(Cruise){
@@ -87,6 +84,17 @@ $(function () {
             let Thirst = event.data.thirst;
             $(".thirst").css("background-image", `conic-gradient(#fff `+Thirst+`%, transparent `+(Thirst - 100)+`%, transparent)`);
         }
+        if(event.data.action == "StatsUpdate"){
+            let PlayerPing = event.data.playerPing;
+            let PlayerId = event.data.playerId;
+            let PlayerCash = event.data.playerCash;
+            let PlayerBank = event.data.playerBank;
+
+            $(".id span").text(PlayerId)
+            $(".ping span").text(PlayerPing+"ms")
+            $(".bank span").text(PlayerBank+"$")
+            $(".cash span").text(PlayerCash+"$")
+        }
         if(event.data.action == "StatusUpdate"){
             let Health = event.data.health;
             let Armour = event.data.armour;
@@ -112,9 +120,11 @@ $(function () {
             if (Framework == "standalone"){
                 $(".hunger-wrapper").hide()
                 $(".thirst-wrapper").hide()
+                $(".stats .bottom").hide()
             }else{
                 $(".hunger-wrapper").show()
                 $(".thirst-wrapper").show()
+                $(".stats .bottom").show()
             }
 
             $(".health").css("background-image", `conic-gradient(#fff `+Health+`%, transparent `+(Health - 100)+`%, transparent)`);

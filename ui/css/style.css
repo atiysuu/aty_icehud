@@ -18,6 +18,63 @@ main {
   display: flex;
   position: relative;
 }
+main .stats {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+}
+main .stats .logo {
+  height: 50px;
+  padding-right: 25px;
+}
+main .stats .logo img {
+  height: 50px;
+}
+main .stats .other {
+  padding-left: 10px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
+  height: 50px;
+  width: 200px;
+  color: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+main .stats .other .top, main .stats .other .bottom {
+  width: 100%;
+  display: flex;
+}
+main .stats .other .top .id, main .stats .other .top .ping, main .stats .other .top .cash, main .stats .other .top .bank, main .stats .other .bottom .id, main .stats .other .bottom .ping, main .stats .other .bottom .cash, main .stats .other .bottom .bank {
+  width: 50%;
+}
+main .stats .other::before {
+  content: "";
+  height: 1px;
+  width: 200px;
+  position: absolute;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
+  top: 0;
+  right: 0;
+}
+main .stats .other::after {
+  content: "";
+  height: 1px;
+  width: 200px;
+  position: absolute;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
+  bottom: 0;
+  right: 0;
+}
 main .status {
   position: absolute;
   width: 350px;
