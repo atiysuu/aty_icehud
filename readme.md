@@ -11,3 +11,7 @@ If you set the framework to "standalone" hunger, thirst and money will not be sh
 - Carhud (Speedometer, seatbelt, cruise control, fuel level and engine health) 
 - Stats (Right Top) (Logo, id, ping and money)
 - Easily customizable
+
+## Help
+- If you need any help contact me through Discord
+atiysu#6666
