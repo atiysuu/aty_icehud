@@ -1,6 +1,5 @@
 ## Usage
-- Set you framework from config
-If you set the framework to "standalone" hunger, thirst and money will not be shown
+- Set you framework from config. If you set the framework to "standalone" hunger, thirst and money will not be shown
 - I added notes to the files so you can modify it easily
 - You need to change the logo from "ui/img"
 - I used scss but you can use normal css
@@ -13,5 +12,4 @@ If you set the framework to "standalone" hunger, thirst and money will not be sh
 - Easily customizable
 
 ## Help
-- If you need any help contact me through Discord
-atiysu#6666
+- If you need any help contact me through Discord: atiysu#6666
