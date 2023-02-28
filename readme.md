@@ -12,4 +12,4 @@
 - Easily customizable
 
 ## Help
-- If you need any help contact me through Discord: atiysu#6666
+- If you need any help contact me through Discord: https://discord.gg/eUDGHx5Kbt. Or dm me: atiysu#6666
