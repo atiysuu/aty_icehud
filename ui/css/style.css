@@ -85,7 +85,7 @@ main .status {
 }
 main .status .map-outline {
   width: 270px;
-  height: 190px;
+  height: 180px;
   border: 1px solid rgba(255, 255, 255, 0.2352941176);
   box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.2352941176), 0 0 5px 1px rgba(255, 255, 255, 0.2352941176) inset;
   position: absolute;
