@@ -76,6 +76,67 @@ $(function () {
             let Street = event.data.street;
             $(".location span").text(Street);
         }
+        if(event.data.action == "UsingVoiceHud"){
+            $(".voicehud").fadeIn()
+            $(".voicehud").css("display", "flex")
+        }
+        if(event.data.action == "saltyVoice"){
+            if (event.data.value == 1){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background", "none")
+                $(".voicehud .voice .3").css("background", "none")
+            }else if (event.data.value == 2){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background", "none")
+            }
+            else if (event.data.value == 3){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background-color", "#fff")
+            }
+        }
+        if(event.data.action == "pmavoice"){
+            if (event.data.value == 1){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background", "none")
+                $(".voicehud .voice .3").css("background", "none")
+            }else if (event.data.value == 2){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background", "none")
+            }
+            else if (event.data.value == 3){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background-color", "#fff")
+            }
+        }
+        if(event.data.action == "mumble"){
+            if (event.data.value == 1){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background", "none")
+                $(".voicehud .voice .3").css("background", "none")
+            }else if (event.data.value == 2){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background", "none")
+            }
+            else if (event.data.value == 3){
+                $(".voicehud .voice .1").css("background-color", "#fff")
+                $(".voicehud .voice .2").css("background-color", "#fff")
+                $(".voicehud .voice .3").css("background-color", "#fff")
+            }
+        }
+        if(event.data.action == "NotUseCarHud"){
+            $(".map-outline").fadeIn();
+            $(".status-wrapper").css("left", "290px");
+            $(".stamina-wrapper").fadeOut()
+            $(".location").css({
+                top: "0",
+                left: "0",
+            });
+        }
         if(event.data.action == "HungerUpdate"){
             let Hunger = event.data.hunger;
             $(".hunger").css("background-image", `conic-gradient(#fff `+Hunger+`%, transparent `+(Hunger - 100)+`%, transparent)`);
@@ -86,6 +147,7 @@ $(function () {
         }
         if(event.data.action == "StatsUpdate"){
             $(".stats").fadeIn();
+            $(".stats").css("display", "flex");
             let PlayerPing = event.data.playerPing;
             let PlayerId = event.data.playerId;
             let PlayerCash = event.data.playerCash;
@@ -165,4 +227,3 @@ function playBuckleSound(){
 function playUnbuckleSound(){
     unbuckleSound.play();
 }
-

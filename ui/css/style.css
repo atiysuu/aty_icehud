@@ -24,7 +24,6 @@ main .stats {
   top: 0;
   right: 0;
   padding-top: 25px;
-  display: flex;
   flex-direction: column;
   align-items: end;
   gap: 10px;
@@ -86,24 +85,24 @@ main .status {
   color: #fff;
 }
 main .status .map-outline {
-  width: 270px;
-  height: 180px;
+  width: 269px;
+  height: 173px;
   border: 1px solid rgba(255, 255, 255, 0.2352941176);
   box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.2352941176), 0 0 5px 1px rgba(255, 255, 255, 0.2352941176) inset;
   position: absolute;
-  left: 5px;
+  left: 5.4px;
   bottom: 10px;
 }
 main .status .status-wrapper {
   width: 40px;
   height: 190px;
   position: absolute;
-  bottom: 10px;
+  bottom: 8px;
   left: 0px;
   transition: left 0.4s, top 0.4s;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   align-items: flex-end;
   justify-content: end;
 }
@@ -315,5 +314,30 @@ main .carhud .rpm .rpm-bar {
   background-color: #fff;
   transition: width 0.2s;
 }
-
-/*# sourceMappingURL=style.css.map */
+main .voicehud{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  gap: 5px;
+  padding-bottom: 5px;
+}
+main .voicehud img{
+  width: 20px;
+}
+main .voicehud .voice{
+  display: flex;
+  gap: 5px;
+}
+main .voicehud span{
+  width: 10px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #fff;
+}

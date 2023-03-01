@@ -124,7 +124,7 @@ if Config.UseCarHud then
                 local Fuel
 
                 if Config.UseLegacyFuel then
-                    Fuel = exports["LegacyFuel"]:GetFuel(vehicle)
+                    Fuel = exports["LegacyFuel"]:GetFuel(Vehicle)
                 else
                     Fuel = GetVehicleFuelLevel(Vehicle)
                 end
@@ -159,6 +159,24 @@ if Config.UseCarHud then
             SeatBelt = false  
         end
     end)
+elseif not Config.UseCarHud then
+    CreateThread(function()
+        while true do
+            if IsPedInAnyVehicle(Player, false) then
+                SendNUIMessage({
+                    action = "NotUseCarHud"
+                })
+                DisplayRadar(true)
+            else
+                SendNUIMessage({
+                    action = "OutSideOfTheCar"
+                })
+                DisplayRadar(false)
+            end
+
+            Wait(1000)
+        end
+    end)
 end
 
 ------- STREET LOCATION -------
@@ -171,6 +189,11 @@ CreateThread(function()
             action = "StreetUpdate",
             street = Street,
         })
+
+        ------- MAKES HUD VISIBLE -------
+        SendNUIMessage({
+            action = "LoggedIn",
+        })
         
         Wait(2000)
     end
@@ -181,12 +204,7 @@ if Config.UseStatusHud then
     CreateThread(function()
         local hunger, thirst
         while true do
-            if login then
-
-                ------- MAKES HUD VISIBLE -------
-                SendNUIMessage({
-                    action = "LoggedIn",
-                })
+            -- if login then
                 
                 local health = GetEntityHealth(Player)
                 local val = health - 100
@@ -237,7 +255,7 @@ if Config.UseStatusHud then
                     framework = Config.Framework,
                     inWater = InWater,
                 })
-            end
+            -- end
             
             Wait(1000)
         end
@@ -273,6 +291,46 @@ if Config.UsePlayerStats then
                 playerBank = PlayersBank,
             })
             Wait(1000)
+        end
+    end)
+end
+
+------- VOICE HUD -------
+
+if Config.UseVoiceHud then
+    CreateThread(function()
+        SendNUIMessage({ 
+            action="UsingVoiceHud",
+        })
+    end)
+    
+    RegisterNetEvent('SaltyChat_VoiceRangeChanged')
+    AddEventHandler('SaltyChat_VoiceRangeChanged', function(voiceRange, index, availableVoiceRanges)
+        index = index + 1
+        if index >= 4 then
+            index = 3
+        end
+        SendNUIMessage({ 
+            action="saltyVoice",
+            value = index
+        })
+    end)
+
+    RegisterNetEvent('pma-voice:setTalkingMode')
+    AddEventHandler('pma-voice:setTalkingMode', function(voiceMode) 
+        SendNUIMessage({ 
+            action = "pmavoice",
+            value = voiceMode
+        })
+    end)
+
+    RegisterNetEvent("mumble:SetVoiceData")
+    AddEventHandler("mumble:SetVoiceData", function(player, key, value) 
+        if GetPlayerServerId(NetworkGetEntityOwner(Player)) == player and key == 'mode' then
+            SendNUIMessage({ 
+                action="mumble",
+                value = value
+            })
         end
     end)
 end
