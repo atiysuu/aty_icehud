@@ -19,6 +19,7 @@ main {
   position: relative;
 }
 main .stats {
+  display: none;
   position: absolute;
   top: 0;
   right: 0;
@@ -76,6 +77,7 @@ main .stats .other::after {
   right: 0;
 }
 main .status {
+  display: none;
   position: absolute;
   width: 350px;
   height: 230px;

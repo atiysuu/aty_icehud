@@ -85,6 +85,7 @@ $(function () {
             $(".thirst").css("background-image", `conic-gradient(#fff `+Thirst+`%, transparent `+(Thirst - 100)+`%, transparent)`);
         }
         if(event.data.action == "StatsUpdate"){
+            $(".stats").fadeIn();
             let PlayerPing = event.data.playerPing;
             let PlayerId = event.data.playerId;
             let PlayerCash = event.data.playerCash;
@@ -96,6 +97,7 @@ $(function () {
             $(".cash span").text(PlayerCash+"$")
         }
         if(event.data.action == "StatusUpdate"){
+            $(".status").fadeIn();
             let Health = event.data.health;
             let Armour = event.data.armour;
             let Stamina = event.data.stamina;
