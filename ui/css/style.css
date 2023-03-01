@@ -326,6 +326,8 @@ main .voicehud{
   left: 10px;
   gap: 5px;
   padding-bottom: 5px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
 }
 main .voicehud img{
   width: 20px;
@@ -340,4 +342,7 @@ main .voicehud span{
   border-radius: 10px;
   background-color: #fff;
   border: 1px solid #fff;
+}
+main .voicehud span.sec{
+  background: none;
 }

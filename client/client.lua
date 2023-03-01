@@ -204,7 +204,7 @@ if Config.UseStatusHud then
     CreateThread(function()
         local hunger, thirst
         while true do
-            -- if login then
+            if login then
                 
                 local health = GetEntityHealth(Player)
                 local val = health - 100
@@ -255,7 +255,7 @@ if Config.UseStatusHud then
                     framework = Config.Framework,
                     inWater = InWater,
                 })
-            -- end
+            end
             
             Wait(1000)
         end
@@ -302,6 +302,29 @@ if Config.UseVoiceHud then
         SendNUIMessage({ 
             action="UsingVoiceHud",
         })
+    end)
+
+    -- CHECKS PLAYER IF ITS TALKING OR NOT --
+    local Talking = false
+    Citizen.CreateThread(function()
+        while true do
+            if NetworkIsPlayerTalking(PlayerId()) then
+                if not Talking then
+                    Talking = true
+                    SendNUIMessage({
+                        action="talking",
+                    })
+                end
+            else
+                if Talking then
+                    Talking = false
+                    SendNUIMessage({
+                        action="Nottalking",
+                    })
+                end
+            end
+            Citizen.Wait(200)
+        end
     end)
     
     RegisterNetEvent('SaltyChat_VoiceRangeChanged')

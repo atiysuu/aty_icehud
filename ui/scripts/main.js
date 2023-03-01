@@ -77,61 +77,66 @@ $(function () {
             $(".location span").text(Street);
         }
         if(event.data.action == "UsingVoiceHud"){
-            $(".voicehud").fadeIn()
-            $(".voicehud").css("display", "flex")
+            $(".voicehud").fadeIn();
+            $(".voicehud").css("display", "flex");
+        }
+        if(event.data.action == "talking"){
+            $(".voicehud").css("opacity", "1.0");
+        }else if (event.data.action == "Nottalking"){
+            $(".voicehud").css("opacity", "0.5");
         }
         if(event.data.action == "saltyVoice"){
             if (event.data.value == 1){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background", "none")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background", "none");
+                $(".voicehud .voice .sec").css("background", "none");
             }else if (event.data.value == 2){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff");
+                $(".voicehud .voice .sec").css("background", "none");
             }
             else if (event.data.value == 3){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background-color", "#fff")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff");
+                $(".voicehud .voice .sec").css("background-color", "#fff");
             }
         }
         if(event.data.action == "pmavoice"){
             if (event.data.value == 1){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background", "none")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background", "none");
+                $(".voicehud .voice .sec").css("background", "none");
             }else if (event.data.value == 2){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff");
+                $(".voicehud .voice .sec").css("background", "none");
             }
             else if (event.data.value == 3){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background-color", "#fff")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff");
+                $(".voicehud .voice .sec").css("background-color", "#fff");
             }
         }
         if(event.data.action == "mumble"){
             if (event.data.value == 1){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background", "none")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background", "none");
+                $(".voicehud .voice .sec").css("background", "none");
             }else if (event.data.value == 2){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background", "none")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff");
+                $(".voicehud .voice .sec").css("background", "none");
             }
             else if (event.data.value == 3){
-                $(".voicehud .voice .1").css("background-color", "#fff")
-                $(".voicehud .voice .2").css("background-color", "#fff")
-                $(".voicehud .voice .3").css("background-color", "#fff")
+                $(".voicehud .voice .one").css("background-color", "#fff");
+                $(".voicehud .voice .two").css("background-color", "#fff")
+                $(".voicehud .voice .sec").css("background-color", "#fff");
             }
         }
         if(event.data.action == "NotUseCarHud"){
             $(".map-outline").fadeIn();
             $(".status-wrapper").css("left", "290px");
-            $(".stamina-wrapper").fadeOut()
+            $(".stamina-wrapper").fadeOut();
             $(".location").css({
                 top: "0",
                 left: "0",
