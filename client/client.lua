@@ -19,6 +19,17 @@ elseif Config.Framework == "qb" then
 end
 
 CreateThread(function()
+	while not login do
+		Wait(1000)
+		if login and not hide then
+			SendNUIMessage({
+				action = "Display"
+			})
+		end
+	end
+end)
+
+CreateThread(function()
 	while true do
 		Player = PlayerPedId()
 		PlayerPosition = GetEntityCoords(Player)
