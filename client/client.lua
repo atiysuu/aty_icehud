@@ -37,6 +37,26 @@ CreateThread(function()
 	end
 end)
 
+RegisterCommand("belt", function()
+	SeatBelt = not SeatBelt or false
+end, false)
+
+RegisterKeyMapping("belt", "Seatbelt", "keyboard", Config.SeatBeltKey)
+
+RegisterCommand("cruise", function()
+	local Vehicle = GetVehiclePedIsIn(Player, false)
+	if IsPedInAnyVehicle(Player, false) and GetPedInVehicleSeat(Vehicle, -1) == PlayerPedId() then
+		local Speed = math.floor(GetEntitySpeed(Vehicle) * SpeedMultiplier)
+		SetVehicleMaxSpeed(Vehicle, (Speed / SpeedMultiplier) + 0.0)
+		if not Cruise then
+			SetVehicleMaxSpeed(Vehicle, 0.0)
+		end
+		Cruise = not Cruise or false
+	end
+end, false)
+
+RegisterKeyMapping("cruise", "Cruise Control", "keyboard", Config.CruiseKey) -- Moved to keymapping to be optimized
+
 ------- CAR HUD -------
 if Config.UseCarHud then
 	SeatBelt = false
@@ -51,29 +71,14 @@ if Config.UseCarHud then
 
 		while true do
 			if IsPedInAnyVehicle(Player, false) then
-				sleep = 1
+				sleep = 1000
 				DisplayRadar(true)
 
 				local Vehicle = GetVehiclePedIsIn(Player, false)
 				local Speed = math.floor(GetEntitySpeed(Vehicle) * SpeedMultiplier)
-
-				-- CRUISE CONTROL --
-				if IsControlJustPressed(0, Config.CruiseKey) and not Cruise and GetPedInVehicleSeat(Vehicle, -1) == PlayerPedId() then
-					SetVehicleMaxSpeed(Vehicle, (Speed / SpeedMultiplier) + 0.0)
-					Cruise = true
-				elseif IsControlJustPressed(0, Config.CruiseKey) and Cruise and GetPedInVehicleSeat(Vehicle, -1) == PlayerPedId() then
-					SetVehicleMaxSpeed(Vehicle, 0.0)
-					Cruise = false
-				end
-
-				-- SEATBELT --
-				if IsControlJustPressed(0, Config.SeatBeltKey) and not SeatBelt then
-					SeatBelt = true
-				elseif IsControlJustPressed(0, Config.SeatBeltKey) and SeatBelt then
-					SeatBelt = false
-				end
-
+				
 				if SeatBelt then
+					sleep = 1 -- Needed to disable key
 					DisableControlAction(0, 75) -- PREVENTS PLAYER FROM GETTING OUT OF THE CAR --
 				elseif not SeatBelt then
 					speedBuffer[2] = speedBuffer[1]
