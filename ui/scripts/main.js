@@ -6,10 +6,10 @@ $(function () {
 			$(".carhud").css("display", "flex");
 			$(".carhud").css("right", "35px");
 			$(".map-outline").fadeIn();
-			$(".status-wrapper").css("left", "290px");
+			$(".status-wrapper").css("left", "15vw");
 			$(".stamina-wrapper").fadeOut();
 			$(".location").css({
-				top: "0",
+				bottom: "19vh",
 				left: "0",
 			});
 			let VehicleSpeed = event.data.vehicleSpeed;
@@ -132,10 +132,10 @@ $(function () {
 		}
 		if (event.data.action == "NotUseCarHud") {
 			$(".map-outline").fadeIn();
-			$(".status-wrapper").css("left", "290px");
+			$(".status-wrapper").css("left", "15vw");
 			$(".stamina-wrapper").fadeOut();
 			$(".location").css({
-				top: "0",
+				bottom: "19vh",
 				left: "0",
 			});
 		}
@@ -222,7 +222,7 @@ $(function () {
 			$(".map-outline").fadeOut();
 			$(".status-wrapper").css("left", "0px");
 			$(".location").css({
-				top: "190px",
+				bottom: "1vh",
 				left: "50px",
 			});
 		}

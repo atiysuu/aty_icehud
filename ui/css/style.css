@@ -85,8 +85,8 @@ main .status {
   color: #fff;
 }
 main .status .map-outline {
-  width: 269px;
-  height: 173px;
+  width: 14.5vw;
+  height: 17vh;
   border: 1px solid rgba(255, 255, 255, 0.2352941176);
   box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.2352941176), 0 0 5px 1px rgba(255, 255, 255, 0.2352941176) inset;
   position: absolute;
@@ -227,12 +227,16 @@ main .status .status-wrapper .oxygen-wrapper .oxygen img {
   width: 18px;
 }
 main .status .location {
-  top: 190px;
+  bottom: 1vh;
   left: 50px;
-  transition: left 0.4s, top 0.4s;
+  transition: left 0.4s, bottom 0.4s;
   position: absolute;
   display: flex;
   gap: 5px;
+}
+main .status .location img{
+  height: 25px;
+  width: auto;
 }
 main .status span {
   font-family: "Poppins", sans-serif;
