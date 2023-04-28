@@ -1,27 +1,19 @@
-local login = false -- PREVENTS HUD FROM VIEWING WITHOUT SELECTING THE PLAYER CHARACTER -- 
 SpeedMultiplier = Config.SpeedUnit == "kmh" and 3.6 or 2.23694 -- SPEED MULTIPLIER (MPH - KMN / Don't Touch) --
 DisplayRadar(false) -- CLOSES THE MAP --
+local hide = false
+
+local Framework = nil
 
 if Config.Framework == "esx" then
-	ESX = exports['es_extended']:getSharedObject()
-
-	RegisterNetEvent('esx:playerLoaded')
-	AddEventHandler('esx:playerLoaded', function()
-		login = true
-	end)
+	Framework = exports['es_extended']:getSharedObject()
 elseif Config.Framework == "qb" then
-	QBCore = exports['qb-core']:GetCoreObject()
-
-	RegisterNetEvent('QBCore:Client:OnPlayerLoaded')
-	AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
-		login = true
-	end)
+	Framework = exports['qb-core']:GetCoreObject()
 end
 
 CreateThread(function()
-	while not login do
+	while Framework ~= nil do
 		Wait(1000)
-		if login and not hide then
+		if not hide then
 			SendNUIMessage({
 				action = "Display"
 			})
@@ -220,7 +212,7 @@ if Config.UseStatusHud then
 	CreateThread(function()
 		local hunger, thirst
 		while true do
-			if login then
+			if Framework ~= nil then
 
 				local health = GetEntityHealth(Player)
 				local val = health - 100
@@ -250,8 +242,8 @@ if Config.UseStatusHud then
 						})
 					end)
 				elseif Config.Framework == "qb" then
-					hunger = QBCore.Functions.GetPlayerData().metadata["hunger"]
-					thirst = QBCore.Functions.GetPlayerData().metadata["thirst"]
+					hunger = Framework.Functions.GetPlayerData().metadata["hunger"]
+					thirst = Framework.Functions.GetPlayerData().metadata["thirst"]
 					SendNUIMessage({
 						action = "HungerUpdate",
 						hunger = hunger
@@ -373,8 +365,6 @@ if Config.UseVoiceHud then
 		end
 	end)
 end
-
-local hide = false
 
 if Config.HideCommand and Config.HideCommand ~= '' then
 	RegisterCommand(Config.HideCommand, function(src, args)
