@@ -8,6 +8,8 @@ if Config.Framework == "esx" then
 	Framework = exports['es_extended']:getSharedObject()
 elseif Config.Framework == "qb" then
 	Framework = exports['qb-core']:GetCoreObject()
+elseif Config.Framework == "standalone" then
+	Framework = "standalone"
 end
 
 CreateThread(function()
