@@ -319,20 +319,16 @@ if Config.UseVoiceHud then
 	Citizen.CreateThread(function()
 		while true do
 			if NetworkIsPlayerTalking(PlayerId()) then
-				if not Talking then
-					Talking = true
-					SendNUIMessage({
-						action = "talking"
-					})
-				end
+				Talking = true
 			else
-				if Talking then
-					Talking = false
-					SendNUIMessage({
-						action = "Nottalking"
-					})
-				end
+				Talking = false
 			end
+			
+			SendNUIMessage({
+				action = "talkingState",
+				state = Talking
+			})
+
 			Citizen.Wait(200)
 		end
 	end)
@@ -344,7 +340,7 @@ if Config.UseVoiceHud then
 			index = 3
 		end
 		SendNUIMessage({
-			action = "saltyVoice",
+			action = "voiceMod",
 			value = index
 		})
 	end)
@@ -352,7 +348,7 @@ if Config.UseVoiceHud then
 	RegisterNetEvent('pma-voice:setTalkingMode')
 	AddEventHandler('pma-voice:setTalkingMode', function(voiceMode)
 		SendNUIMessage({
-			action = "pmavoice",
+			action = "voiceMod",
 			value = voiceMode
 		})
 	end)
@@ -361,10 +357,16 @@ if Config.UseVoiceHud then
 	AddEventHandler("mumble:SetVoiceData", function(player, key, value)
 		if GetPlayerServerId(NetworkGetEntityOwner(Player)) == player and key == 'mode' then
 			SendNUIMessage({
-				action = "mumble",
+				action = "voiceMod",
 				value = value
 			})
 		end
+	end)
+else
+	CreateThread(function()
+		SendNUIMessage({
+			action = "NotUsingVoiceHud"
+		})
 	end)
 end
 

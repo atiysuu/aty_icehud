@@ -80,12 +80,14 @@ $(function () {
 			$(".voicehud").fadeIn();
 			$(".voicehud").css("display", "flex");
 		}
-		if (event.data.action == "talking") {
-			$(".voicehud").css("opacity", "1.0");
-		} else if (event.data.action == "Nottalking") {
-			$(".voicehud").css("opacity", "0.5");
+		if (event.data.action == "talkingState") {
+			if (event.data.state){
+				$(".voicehud").css("opacity", "1.0");
+			}else{
+				$(".voicehud").css("opacity", "0.5");
+			}
 		}
-		if (event.data.action == "saltyVoice") {
+		if (event.data.action == "voiceMod") {
 			if (event.data.value == 1) {
 				$(".voicehud .voice .one").css("background-color", "#fff");
 				$(".voicehud .voice .two").css("background", "none");
@@ -100,35 +102,8 @@ $(function () {
 				$(".voicehud .voice .sec").css("background-color", "#fff");
 			}
 		}
-		if (event.data.action == "pmavoice") {
-			if (event.data.value == 1) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background", "none");
-				$(".voicehud .voice .sec").css("background", "none");
-			} else if (event.data.value == 2) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background-color", "#fff");
-				$(".voicehud .voice .sec").css("background", "none");
-			} else if (event.data.value == 3) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background-color", "#fff");
-				$(".voicehud .voice .sec").css("background-color", "#fff");
-			}
-		}
-		if (event.data.action == "mumble") {
-			if (event.data.value == 1) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background", "none");
-				$(".voicehud .voice .sec").css("background", "none");
-			} else if (event.data.value == 2) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background-color", "#fff");
-				$(".voicehud .voice .sec").css("background", "none");
-			} else if (event.data.value == 3) {
-				$(".voicehud .voice .one").css("background-color", "#fff");
-				$(".voicehud .voice .two").css("background-color", "#fff");
-				$(".voicehud .voice .sec").css("background-color", "#fff");
-			}
+		if (event.data.action == "NotUsingVoiceHud") {
+			$(".voicehud").hide()
 		}
 		if (event.data.action == "NotUseCarHud") {
 			$(".map-outline").fadeIn();

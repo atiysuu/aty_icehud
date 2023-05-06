@@ -39,7 +39,7 @@ main .stats .other {
   padding-left: 10px;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
   height: 50px;
-  width: 200px;
+  min-width: 200px;
   color: #fff;
   position: relative;
   display: flex;
@@ -60,7 +60,7 @@ main .stats .other .top .id, main .stats .other .top .ping, main .stats .other .
 main .stats .other::before {
   content: "";
   height: 1px;
-  width: 200px;
+  min-width: 200px;
   position: absolute;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
   top: 0;
@@ -70,7 +70,7 @@ main .stats .other::after {
   content: "";
   height: 1px;
   width: 200px;
-  position: absolute;
+  min-width: absolute;
   background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.02) 20%, rgba(255, 255, 255, 0.4) 100%);
   bottom: 0;
   right: 0;
@@ -78,15 +78,15 @@ main .stats .other::after {
 main .status {
   display: none;
   position: absolute;
-  width: 350px;
+  min-width: 350px;
   height: 230px;
   left: 25px;
   bottom: 25px;
   color: #fff;
 }
 main .status .map-outline {
-  width: 14.5vw;
-  height: 17vh;
+  width: 14vw;
+  height: 16vh;
   border: 1px solid rgba(255, 255, 255, 0.2352941176);
   box-shadow: 0 0 5px 1px rgba(255, 255, 255, 0.2352941176), 0 0 5px 1px rgba(255, 255, 255, 0.2352941176) inset;
   position: absolute;
