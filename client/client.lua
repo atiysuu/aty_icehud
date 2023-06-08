@@ -3,6 +3,7 @@ DisplayRadar(false) -- CLOSES THE MAP --
 local hide = false
 
 local Framework = nil
+PlayerData = {}
 
 if Config.Framework == "esx" then
 	Framework = exports['es_extended']:getSharedObject()
@@ -13,21 +14,28 @@ elseif Config.Framework == "standalone" then
 end
 
 CreateThread(function()
-	while Framework ~= nil do
-		Wait(1000)
-		if not hide then
-			SendNUIMessage({
-				action = "Display"
-			})
+	while true do
+
+		if Config.Framework == "esx" then
+			PlayerData = Framework.GetPlayerData()
+		else
+			PlayerData = Framework.Functions.GetPlayerData()
 		end
+		
+		Player = PlayerPedId()
+		PlayerPosition = GetEntityCoords(Player)
+		Wait(2000)
 	end
 end)
 
 CreateThread(function()
 	while true do
-		Player = PlayerPedId()
-		PlayerPosition = GetEntityCoords(Player)
-		Wait(2000)
+		Wait(1000)
+		if not hide and table_size(PlayerData) > 0 then
+			SendNUIMessage({
+				action = "Display"
+			})
+		end
 	end
 end)
 
@@ -214,7 +222,7 @@ if Config.UseStatusHud then
 	CreateThread(function()
 		local hunger, thirst
 		while true do
-			if Framework ~= nil then
+			if table_size(PlayerData) > 0 then
 
 				local health = GetEntityHealth(Player)
 				local val = health - 100
@@ -431,4 +439,14 @@ end
 function IsCar(veh)
 	local vc = GetVehicleClass(veh)
 	return (vc >= 0 and vc <= 7) or (vc >= 9 and vc <= 12) or (vc >= 17 and vc <= 20)
+end
+
+function table_size(tbl)
+	local size = 0
+
+	for k, v in pairs(tbl) do
+		size = size + 1
+	end
+
+	return size
 end
