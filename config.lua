@@ -1,8 +1,8 @@
 Config = {
 	Framework = "esx", -- qb / esx / standalone
 	SpeedUnit = "kmh", -- kmh / mph
-	CruiseKey = 137, -- CAPSLOCK / https://docs.fivem.net/docs/game-references/controls/
-	SeatBeltKey = 29, -- B / https://docs.fivem.net/docs/game-references/controls/
+	CruiseKey = "CAPITAL", -- CAPSLOCK / https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
+	SeatBeltKey = "B", -- B / https://docs.fivem.net/docs/game-references/input-mapper-parameter-ids/keyboard/
 	UseCarHud = true,
 	UseStatusHud = true,
 	UsePlayerStats = true,
