@@ -6,7 +6,8 @@ description 'aty_icehud'
 shared_script 'config.lua'
 
 client_scripts{
-    'client/*.lua',
+    'client/utils.lua',
+    'client/client.lua',
 }
 
 server_scripts{

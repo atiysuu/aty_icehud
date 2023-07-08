@@ -19,7 +19,6 @@ main {
   position: relative;
 }
 main .stats {
-  display: none;
   position: absolute;
   top: 0;
   right: 0;
@@ -76,7 +75,6 @@ main .stats .other::after {
   right: 0;
 }
 main .status {
-  display: none;
   position: absolute;
   min-width: 350px;
   height: 230px;
@@ -245,7 +243,6 @@ main .status img {
   width: 25px;
 }
 main .carhud {
-  display: none;
   position: absolute;
   right: 35px;
   bottom: 35px;
@@ -273,7 +270,6 @@ main .carhud .other-wrapper .icons {
 }
 main .carhud .other-wrapper .icons img {
   width: 22px;
-  opacity: 0.8;
   transition: opacity 0.3s;
 }
 main .carhud .other-wrapper .icons .fuel-bar-wrapper {
@@ -349,4 +345,7 @@ main .voicehud span{
 }
 main .voicehud span.sec{
   background: none;
+}
+.belt{
+  opacity: 0.3;
 }

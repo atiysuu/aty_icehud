@@ -2,29 +2,10 @@ $(function () {
 	let buckleSound = false;
 	window.addEventListener("message", function (event) {
 		if (event.data.action == "VehicleInfo") {
-			$(".carhud").fadeIn();
-			$(".carhud").css("display", "flex");
-			$(".carhud").css("right", "35px");
-			$(".map-outline").fadeIn();
-			$(".status-wrapper").css("left", "15vw");
-			$(".stamina-wrapper").fadeOut();
-			$(".location").css({
-				bottom: "19vh",
-				left: "0",
-			});
 			let VehicleSpeed = event.data.vehicleSpeed;
 			let VehicleHealth = event.data.vehicleHealth;
-			let SpeedUnit = event.data.speedUnit;
 			let VehicleRPM = event.data.rpm;
 			let Fuel = event.data.fuel;
-			let Cruise = event.data.cruise;
-			let SeatBelt = event.data.seatBelt;
-
-			if (SpeedUnit == "kmh") {
-				$(".speed-unit").text("KMH");
-			} else {
-				$(".speed-unit").text("MPH");
-			}
 
 			$(".speed").text(String(VehicleSpeed).padStart(3, "0"));
 			$(".rpm-bar").css("width", VehicleRPM + "%");
@@ -51,13 +32,26 @@ $(function () {
 				$(".engine").attr("src", "img/engine.png");
 				$(".engine").css("opacity", "0.3");
 			}
+		}
+
+		if (event.data.action == "StreetUpdate") {
+			let Street = event.data.street;
+			$(".location span").text(Street);
+		}
+
+		if (event.data.action == "cruise") {
+			let Cruise = event.data.cruise;
 
 			if (Cruise) {
 				$(".cruise").css("opacity", "0.8");
 			} else {
 				$(".cruise").css("opacity", "0.3");
 			}
+		}
 
+		if (event.data.action == "belt") {
+			let SeatBelt = event.data.status;
+			
 			if (SeatBelt) {
 				$(".belt").css("opacity", "0.8");
 				if (!buckleSound) {
@@ -72,21 +66,15 @@ $(function () {
 				}
 			}
 		}
-		if (event.data.action == "StreetUpdate") {
-			let Street = event.data.street;
-			$(".location span").text(Street);
-		}
-		if (event.data.action == "UsingVoiceHud") {
-			$(".voicehud").fadeIn();
-			$(".voicehud").css("display", "flex");
-		}
+
 		if (event.data.action == "talkingState") {
 			if (event.data.state){
 				$(".voicehud").css("opacity", "1.0");
 			}else{
-				$(".voicehud").css("opacity", "0.5");
+				$(".voicehud").css("opacity", "0.3");
 			}
 		}
+
 		if (event.data.action == "voiceMod") {
 			if (event.data.value == 1) {
 				$(".voicehud .voice .one").css("background-color", "#fff");
@@ -102,9 +90,36 @@ $(function () {
 				$(".voicehud .voice .sec").css("background-color", "#fff");
 			}
 		}
-		if (event.data.action == "NotUsingVoiceHud") {
-			$(".voicehud").hide()
+
+		if (event.data.action == "useOrNot") {
+			let data = event.data
+			if (data.voiceHud){
+				$(".voicehud").show()
+			}else{
+				$(".voicehud").hide()
+			}
+			if (data.playerStats){
+				$(".stats").show();
+			}else{
+				$(".stats").hide();
+			}
+			if (data.statusHud){
+				$(".status").show();
+			}else{
+				$(".status").hide();
+			}
+			if (data.carHud){
+				$(".carhud").show();
+			}else{
+				$(".carhud").hide();
+			}
+			if (data.speedUnit == "kmh") {
+				$(".speed-unit").text("KMH");
+			} else {
+				$(".speed-unit").text("MPH");
+			}
 		}
+
 		if (event.data.action == "NotUseCarHud") {
 			$(".map-outline").fadeIn();
 			$(".status-wrapper").css("left", "15vw");
@@ -114,6 +129,7 @@ $(function () {
 				left: "0",
 			});
 		}
+
 		if (event.data.action == "HungerUpdate") {
 			let Hunger = event.data.hunger;
 			$(".hunger").css(
@@ -121,6 +137,7 @@ $(function () {
 				`conic-gradient(#fff ` + Hunger + `%, transparent ` + (Hunger - 100) + `%, transparent)`
 			);
 		}
+
 		if (event.data.action == "ThirstUpdate") {
 			let Thirst = event.data.thirst;
 			$(".thirst").css(
@@ -128,26 +145,46 @@ $(function () {
 				`conic-gradient(#fff ` + Thirst + `%, transparent ` + (Thirst - 100) + `%, transparent)`
 			);
 		}
-		if (event.data.action == "StatsUpdate") {
-			$(".stats").fadeIn();
-			$(".stats").css("display", "flex");
-			let PlayerPing = event.data.playerPing;
-			let PlayerId = event.data.playerId;
-			let PlayerCash = event.data.playerCash;
-			let PlayerBank = event.data.playerBank;
 
-			$(".id span").text(PlayerId);
-			$(".ping span").text(PlayerPing + "ms");
-			$(".bank span").text(PlayerBank + "$");
-			$(".cash span").text(PlayerCash + "$");
+		if (event.data.action == "StatsUpdate") {
+			$(".stats").css("display", "flex");
+
+			$(".id span").text(event.data.playerId);
+			$(".ping span").text(event.data.playerPing + "ms");
+			$(".bank span").text("$" + event.data.playerCash);
+			$(".cash span").text("$" + event.data.playerBank);
 		}
+
 		if (event.data.action == "StatusUpdate") {
-			$(".status").fadeIn();
+			if (event.data.inCar){
+				$(".carhud").fadeIn();
+				$(".carhud").css("display", "flex");
+				$(".carhud").css("right", "35px");
+				$(".map-outline").fadeIn();
+				$(".status-wrapper").css("left", "15vw");
+				$(".stamina-wrapper").fadeOut();
+				$(".location").css({
+					bottom: "19vh",
+					left: "0",
+				});
+			}else{
+				$(".carhud").fadeOut();
+				$(".carhud").css("right", "-335px");
+				$(".rpm-bar").css("width", "0%");
+				$(".map-outline").fadeOut();
+				$(".status-wrapper").css("left", "0px");
+				$(".stamina-wrapper").fadeIn();
+				$(".location").css({
+					bottom: "1vh",
+					left: "50px",
+				});
+			}
+
 			let Health = event.data.health;
 			let Armour = event.data.armour;
 			let Stamina = event.data.stamina;
 			let Oxygen = event.data.oxygen;
-			let Framework = event.data.framework;
+			let isStandalone = event.data.isStandalone;
 			let InWater = event.data.inWater;
 
 			if (Armour == 0) {
@@ -158,18 +195,14 @@ $(function () {
 
 			if (InWater) {
 				$(".oxygen-wrapper").fadeIn();
-			} else if (!InWater) {
+			} else{
 				$(".oxygen-wrapper").fadeOut();
 			}
 
-			if (Framework == "standalone") {
+			if (isStandalone == "standalone") {
 				$(".hunger-wrapper").hide();
 				$(".thirst-wrapper").hide();
 				$(".stats .bottom").hide();
-			} else {
-				$(".hunger-wrapper").show();
-				$(".thirst-wrapper").show();
-				$(".stats .bottom").show();
 			}
 
 			$(".health").css(
@@ -189,23 +222,13 @@ $(function () {
 				`conic-gradient(#fff ` + Oxygen + `%, transparent ` + (Oxygen - 100) + `%, transparent)`
 			);
 		}
-		if (event.data.action == "OutSideOfTheCar") {
-			$(".stamina-wrapper").fadeIn();
-			$(".carhud").fadeOut();
-			$(".carhud").css("right", "-335px");
-			$(".rpm-bar").css("width", "0%");
-			$(".map-outline").fadeOut();
-			$(".status-wrapper").css("left", "0px");
-			$(".location").css({
-				bottom: "1vh",
-				left: "50px",
-			});
-		}
-		if (event.data.action == "Display") {
-			$("body").fadeIn();
-		}
-		if (event.data.action == "Hide") {
-			$("body").fadeOut();
+
+		if (event.data.action == "loggedIn") {
+			if(event.data.status){
+				$("body").fadeIn()
+			}else{
+				$("body").fadeOut()
+			}
 		}
 	});
 });
