@@ -30,10 +30,11 @@ main{
         gap: 10px;
 
         .logo{
-            height: 50px;
             padding-right: 25px;
+
             img {
-                height: 50px;
+                max-height: 75px;
+                max-width: 150px;
             }
         }
 
@@ -106,7 +107,7 @@ main{
             height: 190px;
             position: absolute;
             bottom: 10px;
-            left: 0px;
+            left: 15vw;
             transition: left 0.4s, top 0.4s;
             display: flex;
             flex-direction: column;
@@ -255,9 +256,9 @@ main{
         }
 
         .location{
-            top: 190px;
-            left: 50px;
-            transition: left 0.4s, top 0.4s;
+            bottom: 19vh;
+            left: 0;
+            transition: left 0.4s, bottom 0.4s;
             position: absolute;
             display: flex;
             gap: 5px;
@@ -303,8 +304,11 @@ main{
                 img{
                     width: 22px;
                     opacity: 0.8;
-
                     transition: opacity 0.3s;
+                }
+
+                .belt, .cruise{
+                    opacity: 0.3;
                 }
 
                 .fuel-bar-wrapper{
@@ -355,6 +359,40 @@ main{
                 background-color: #fff;
                 transition: width 0.2s;
             }
+        }
+    }
+
+    .voicehud{
+        position: absolute;
+        top: 35px;
+        left: 35px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        transition: opacity 0.3s;
+    
+        .voice{
+            display: flex;
+            gap: 3px;
+
+            span{
+                border-radius: 5px;
+                width: 13px;
+                height: 4px;
+                border: 1px solid #fff;
+                background-color: #fff;
+                display: block;
+
+                &:last-child{
+                    background: none;
+                }
+            }
+        }
+    
+        img{
+            width: 30px;
         }
     }
 }

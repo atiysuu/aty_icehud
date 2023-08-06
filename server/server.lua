@@ -25,11 +25,7 @@ if Config.UsePlayerStats then
                 bank = xPlayer.PlayerData.money["cash"]
             end
     
-            cb({
-                cash = cash,
-                bank = bank,
-                ping = ping
-            })
+            cb({cash = cash, bank = bank, ping = ping})
         end)
     else
         RegisterServerEvent("aty_icehud:server:GetPlayerPing", function()

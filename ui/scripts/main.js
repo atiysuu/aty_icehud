@@ -1,20 +1,34 @@
 $(function () {
 	let buckleSound = false;
+	let framework
+	let carHud = false
+
 	window.addEventListener("message", function (event) {
+		let data = event.data
+		if (event.data.action == "loaded") {
+			if (data.speedUnit == "kmh") {$(".speed-unit").text("KMH")} else {$(".speed-unit").text("MPH")}
+			data.voiceHud ? $(".voicehud").show() : $(".voicehud").hide()
+			data.playerStats ? $(".stats").show() : $(".stats").hide()
+			data.statusHud ? $(".status").show() : $(".status").hide()
+			data.carHud ? carHud = true && $(".carhud").show() && $(".carhud").css("display", "flex") : $(".carhud").hide()
+			framework = data.framework
+			alwaysMap = data.alwaysMap
+		}
+
 		if (event.data.action == "VehicleInfo") {
-			let VehicleSpeed = event.data.vehicleSpeed;
-			let VehicleHealth = event.data.vehicleHealth;
-			let VehicleRPM = event.data.rpm;
-			let Fuel = event.data.fuel;
+			let speed = event.data.vehicleSpeed;
+			let health = event.data.vehicleHealth;
+			let rpm = event.data.rpm;
+			let fuel = event.data.fuel;
 
-			$(".speed").text(String(VehicleSpeed).padStart(3, "0"));
-			$(".rpm-bar").css("width", VehicleRPM + "%");
-			$(".fuel-bar").css("height", Fuel + "%");
+			$(".speed").text(String(speed).padStart(3, "0"));
+			$(".rpm-bar").css("width", rpm + "%");
+			$(".fuel-bar").css("height", fuel + "%");
 
-			if (Fuel <= 40 && Fuel >= 20) {
+			if (fuel <= 40 && fuel >= 20) {
 				$(".fuel").attr("src", "img/fuel40.png");
 				$(".fuel-bar").css("background-color", "#FFA229");
-			} else if (Fuel <= 20) {
+			} else if (fuel <= 20) {
 				$(".fuel").attr("src", "img/fuel20.png");
 				$(".fuel-bar").css("background-color", "#FF2929");
 			} else {
@@ -22,10 +36,10 @@ $(function () {
 				$(".fuel-bar").css("background-color", "#FFFFFF");
 			}
 
-			if (VehicleHealth <= 700 && VehicleHealth >= 500) {
+			if (health <= 700 && health >= 500) {
 				$(".engine").attr("src", "img/engine700.png");
 				$(".engine").css("opacity", "0.8");
-			} else if (VehicleHealth <= 500) {
+			} else if (health < 500) {
 				$(".engine").attr("src", "img/engine500.png");
 				$(".engine").css("opacity", "0.8");
 			} else {
@@ -34,19 +48,8 @@ $(function () {
 			}
 		}
 
-		if (event.data.action == "StreetUpdate") {
-			let Street = event.data.street;
-			$(".location span").text(Street);
-		}
-
 		if (event.data.action == "cruise") {
-			let Cruise = event.data.cruise;
-
-			if (Cruise) {
-				$(".cruise").css("opacity", "0.8");
-			} else {
-				$(".cruise").css("opacity", "0.3");
-			}
+			event.data.status ? $(".cruise").css("opacity", "0.8") : $(".cruise").css("opacity", "0.3");
 		}
 
 		if (event.data.action == "belt") {
@@ -91,64 +94,42 @@ $(function () {
 			}
 		}
 
-		if (event.data.action == "useOrNot") {
-			let data = event.data
-			if (data.voiceHud){
-				$(".voicehud").show()
-			}else{
-				$(".voicehud").hide()
-			}
-			if (data.playerStats){
-				$(".stats").show();
-			}else{
-				$(".stats").hide();
-			}
-			if (data.statusHud){
-				$(".status").show();
-			}else{
-				$(".status").hide();
-			}
-			if (data.carHud){
-				$(".carhud").show();
-			}else{
-				$(".carhud").hide();
-			}
-			if (data.speedUnit == "kmh") {
-				$(".speed-unit").text("KMH");
-			} else {
-				$(".speed-unit").text("MPH");
-			}
-		}
+		if (event.data.action == "other") {
+			$(".location .location-text").text(event.data.street);
 
-		if (event.data.action == "NotUseCarHud") {
-			$(".map-outline").fadeIn();
-			$(".status-wrapper").css("left", "15vw");
-			$(".stamina-wrapper").fadeOut();
-			$(".location").css({
-				bottom: "19vh",
-				left: "0",
-			});
-		}
+			if (event.data.inCar){
+				if (carHud) {
+					$(".carhud").css("display", "flex");
+					$(".carhud").css("right", "35px");
+				} 
 
-		if (event.data.action == "HungerUpdate") {
-			let Hunger = event.data.hunger;
-			$(".hunger").css(
-				"background-image",
-				`conic-gradient(#fff ` + Hunger + `%, transparent ` + (Hunger - 100) + `%, transparent)`
-			);
-		}
-
-		if (event.data.action == "ThirstUpdate") {
-			let Thirst = event.data.thirst;
-			$(".thirst").css(
-				"background-image",
-				`conic-gradient(#fff ` + Thirst + `%, transparent ` + (Thirst - 100) + `%, transparent)`
-			);
+				$(".map-outline").fadeIn();
+				$(".stamina-wrapper").fadeOut();
+				if (!alwaysMap){
+					$(".status-wrapper").css("left", "15vw");
+					$(".location").css({
+						bottom: "19vh",
+						left: "0",
+					});
+				}
+			}else{
+				$(".carhud").fadeOut();
+				$(".carhud").css("right", "-335px");
+				$(".rpm-bar").css("width", "0%");
+				$(".map-outline").fadeOut();
+				$(".stamina-wrapper").fadeIn();
+				if (!alwaysMap){
+					$(".status-wrapper").css("left", "0px");
+					$(".location").css({
+						bottom: "1vh",
+						left: "50px",
+					});
+				}
+			}
 		}
 
 		if (event.data.action == "StatsUpdate") {
 			$(".stats").css("display", "flex");
-
 			$(".id span").text(event.data.playerId);
 			$(".ping span").text(event.data.playerPing + "ms");
 			$(".bank span").text("$" + event.data.playerCash);
@@ -156,70 +137,59 @@ $(function () {
 		}
 
 		if (event.data.action == "StatusUpdate") {
-			if (event.data.inCar){
-				$(".carhud").fadeIn();
-				$(".carhud").css("display", "flex");
-				$(".carhud").css("right", "35px");
-				$(".map-outline").fadeIn();
-				$(".status-wrapper").css("left", "15vw");
-				$(".stamina-wrapper").fadeOut();
-				$(".location").css({
-					bottom: "19vh",
-					left: "0",
-				});
+			let health = event.data.health;
+			let armor = event.data.armor;
+			let stamina = event.data.stamina;
+			let oxygen = event.data.oxygen;
+			let inWater = event.data.inWater;
+
+			if (framework != "standalone"){
+				let thirst = event.data.thirst
+				let hunger = event.data.hunger
+
+				$(".thirst").css(
+					"background-image",
+					`conic-gradient(#fff ` + thirst + `%, transparent ` + (thirst - 100) + `%, transparent)`
+				);
+
+				$(".hunger").css(
+					"background-image",
+					`conic-gradient(#fff ` + hunger + `%, transparent ` + (hunger - 100) + `%, transparent)`
+				);
 			}else{
-				$(".carhud").fadeOut();
-				$(".carhud").css("right", "-335px");
-				$(".rpm-bar").css("width", "0%");
-				$(".map-outline").fadeOut();
-				$(".status-wrapper").css("left", "0px");
-				$(".stamina-wrapper").fadeIn();
-				$(".location").css({
-					bottom: "1vh",
-					left: "50px",
-				});
+				$(".thirst-wrapper, .hunger-wrapper").hide()
+				$(".stats .bottom").hide()
 			}
 
-			let Health = event.data.health;
-			let Armour = event.data.armour;
-			let Stamina = event.data.stamina;
-			let Oxygen = event.data.oxygen;
-			let isStandalone = event.data.isStandalone;
-			let InWater = event.data.inWater;
+			$(".location .location-text").text(event.data.street);
 
-			if (Armour == 0) {
+			if (armor == 0) {
 				$(".armour-wrapper").fadeOut();
-			} else if (Armour > 0) {
+			} else if (armor > 0) {
 				$(".armour-wrapper").fadeIn();
 			}
 
-			if (InWater) {
+			if (inWater) {
 				$(".oxygen-wrapper").fadeIn();
 			} else{
 				$(".oxygen-wrapper").fadeOut();
 			}
 
-			if (isStandalone == "standalone") {
-				$(".hunger-wrapper").hide();
-				$(".thirst-wrapper").hide();
-				$(".stats .bottom").hide();
-			}
-
 			$(".health").css(
 				"background-image",
-				`conic-gradient(#fff ` + Health + `%, transparent ` + (Health - 100) + `%, transparent)`
+				`conic-gradient(#fff ` + health + `%, transparent ` + (health - 100) + `%, transparent)`
 			);
 			$(".armour").css(
 				"background-image",
-				`conic-gradient(#fff ` + Armour + `%, transparent ` + (Armour - 100) + `%, transparent)`
+				`conic-gradient(#fff ` + armor + `%, transparent ` + (armor - 100) + `%, transparent)`
 			);
 			$(".stamina").css(
 				"background-image",
-				`conic-gradient(#fff ` + Stamina + `%, transparent ` + (Stamina - 100) + `%, transparent)`
+				`conic-gradient(#fff ` + stamina + `%, transparent ` + (stamina - 100) + `%, transparent)`
 			);
 			$(".oxygen").css(
 				"background-image",
-				`conic-gradient(#fff ` + Oxygen + `%, transparent ` + (Oxygen - 100) + `%, transparent)`
+				`conic-gradient(#fff ` + oxygen + `%, transparent ` + (oxygen - 100) + `%, transparent)`
 			);
 		}
 

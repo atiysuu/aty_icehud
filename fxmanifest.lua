@@ -4,24 +4,11 @@ game 'gta5'
 description 'aty_icehud'
 
 shared_script 'config.lua'
-
-client_scripts{
-    'client/utils.lua',
-    'client/client.lua',
-}
-
-server_scripts{
-    'server/*.lua',
-}
-
-ui_page{
-    'ui/index.html'
-} 
+client_script 'client/client.lua'
+server_script 'server/server.lua'
+ui_page 'ui/index.html'
 
 files {
-    'ui/index.html',
-    'ui/css/*.*',
-    'ui/scripts/*.*',
-    'ui/img/*.*',
-    'ui/sounds/*.*',
+    'ui/**/*.*',
+    'ui/*.*',
 }
