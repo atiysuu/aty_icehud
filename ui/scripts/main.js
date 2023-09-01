@@ -2,6 +2,7 @@ $(function () {
 	let buckleSound = false;
 	let framework
 	let carHud = false
+	let alwaysMap = false
 
 	window.addEventListener("message", function (event) {
 		let data = event.data
